@@ -566,5 +566,92 @@
             </div>
         </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        let attemptCount = 0;
+
+        const attemptCounterEl = document.getElementById('attemptCounter');
+        const attemptCountEl = document.getElementById('attemptCount');
+
+        const overlays = {
+          celebration: document.getElementById('celebration'),
+          noOverlay1: document.getElementById('noOverlay1'),
+          noOverlay2: document.getElementById('noOverlay2'),
+          noOverlay3: document.getElementById('noOverlay3'),
+          noOverlayFinal: document.getElementById('noOverlayFinal')
+        };
+
+        const mainButtons = document.querySelectorAll('.friendship-card .btn');
+
+        function showOverlay(overlay) {
+          Object.values(overlays).forEach(o => o.style.display = 'none');
+          if (overlay) {
+            overlay.style.display = 'flex';
+          }
+        }
+
+        function incrementAttempt() {
+          attemptCount++;
+          attemptCountEl.textContent = attemptCount;
+          if (attemptCount === 1) {
+            attemptCounterEl.style.display = 'block';
+          }
+        }
+
+        // Initial yes button on main card: show celebration overlay
+        mainButtons.forEach(button => {
+          if (button.classList.contains('btn-yes')) {
+            button.addEventListener('click', () => {
+              showOverlay(overlays.celebration);
+              attemptCounterEl.style.display = 'none';
+            });
+          } else if (button.classList.contains('btn-no')) {
+            button.addEventListener('click', () => {
+              incrementAttempt();
+              showOverlay(overlays.noOverlay1);
+            });
+          }
+        });
+
+        // Setup no response overlays buttons dynamically:
+        // noOverlay1
+        overlays.noOverlay1.querySelector('.btn-yes').addEventListener('click', () => {
+          showOverlay(overlays.celebration);
+          attemptCounterEl.style.display = 'none';
+        });
+        overlays.noOverlay1.querySelector('.btn-no').addEventListener('click', () => {
+          incrementAttempt();
+          showOverlay(overlays.noOverlay2);
+        });
+
+        // noOverlay2
+        overlays.noOverlay2.querySelector('.btn-yes').addEventListener('click', () => {
+          showOverlay(overlays.celebration);
+          attemptCounterEl.style.display = 'none';
+        });
+        overlays.noOverlay2.querySelector('.btn-no').addEventListener('click', () => {
+          incrementAttempt();
+          showOverlay(overlays.noOverlay3);
+        });
+
+        // noOverlay3
+        overlays.noOverlay3.querySelector('.btn-yes').addEventListener('click', () => {
+          showOverlay(overlays.celebration);
+          attemptCounterEl.style.display = 'none';
+        });
+        overlays.noOverlay3.querySelector('.btn-no').addEventListener('click', () => {
+          incrementAttempt();
+          showOverlay(overlays.noOverlayFinal);
+        });
+
+        // noOverlayFinal
+        overlays.noOverlayFinal.querySelector('.btn-yes').addEventListener('click', () => {
+          showOverlay(overlays.celebration);
+          attemptCounterEl.style.display = 'none';
+        });
+
+      });
+    </script>
 </body>
 </html>
